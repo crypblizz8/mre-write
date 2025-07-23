@@ -34,6 +34,7 @@ export async function setupClient(): Promise<SecretVaultBuilderClient> {
 
   await builder.refreshRootToken();
   console.log('✅ Client ready\n');
+  globalThis.__NILLION.setLogLevel('debug');
 
   return builder;
 }

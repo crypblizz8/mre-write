@@ -32,15 +32,21 @@ async function step1_createCollection(
   return process.env.USER_COLLECTION_ID!;
 }
 
-export async function GET() {
+export async function POST() {
   try {
     const builder = await setupClient();
     console.log('🔑 Builder:', builder);
     const collectionId = await step1_createCollection(builder);
     console.log('CREATED COLLECTION:collectionId', collectionId);
+    return NextResponse.json(
+      { message: 'success', collectionId },
+      { status: 200 }
+    );
   } catch (error) {
     console.error('❌ Script failed:', error);
-    process.exit(1);
+    return NextResponse.json(
+      { error: 'Failed to create schema' },
+      { status: 500 }
+    );
   }
-  return NextResponse.json({ message: 'success', foo: 'bar' }, { status: 200 });
 }
